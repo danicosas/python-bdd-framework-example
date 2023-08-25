@@ -2,14 +2,14 @@ from behave import given, when, then
 from selenium import webdriver
 from pages.duckduckgo_page import DuckDuckGoPage
 from managers.page_object_manager import PageObjectManager
-from managers.config_reader import ConfigReader
+from managers.file_reader_manager import FileReaderManager
 
 @given('I am on the DuckDuckGo homepage')
 def step_impl(context):
     context.driver = webdriver.Chrome()
 
-    config_reader = ConfigReader('config.properties')
-    base_url = config_reader.get_value('base_url')
+    file_reader_manager = FileReaderManager()
+    base_url = file_reader_manager.get_config_reader().get_value('base_url')
 
     context.page_manager = PageObjectManager(context.driver)
     duckduckgo_page = context.page_manager.get_page(DuckDuckGoPage)
