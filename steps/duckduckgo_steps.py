@@ -23,9 +23,11 @@ def step_impl(context, search_term):
     duckduckgo_page.enter_search(search_term)
     duckduckgo_page.click_search_button()
 
-@then('I see search results related to "{search_term}"')
-def step_impl(context, search_term):
-    assert search_term in context.driver.title
+    context.search_term = search_term
+
+@then('I see search results related to the search term')
+def step_impl(context):
+    assert context.search_term in context.driver.title
 
 @then('I close the browser')
 def step_impl(context):
