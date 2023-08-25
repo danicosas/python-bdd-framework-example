@@ -7,8 +7,8 @@ class DuckDuckGoPage:
     def __init__(self, driver):
         self.driver = driver
 
-    def load(self):
-        self.driver.get('https://duckduckgo.com/')
+    def load(self, base_url):
+        self.driver.get(base_url)
 
     def enter_search(self, search_term):
         search_input = self.driver.find_element(*self.SEARCH_INPUT)
