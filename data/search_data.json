@@ -1,0 +1,16 @@
+{
+  "searches": [
+    {
+      "term": "Duck",
+      "expected_result": "Duck"
+    },
+    {
+      "term": "Python",
+      "expected_result": "Python"
+    },
+    {
+      "term": "Behave",
+      "expected_result": "Behave"
+    }
+  ]
+}
