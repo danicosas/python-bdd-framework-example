@@ -10,3 +10,5 @@ Feature: Searching on DuckDuckGo
       | Duck       |
       | Python     |
       | Behave     |
+
+  Then I capture a screenshot
