@@ -1,10 +1,8 @@
 import json
 import os
-from behave import given, when, then
-from selenium.webdriver.common.by import By
-
+from behave import given, when, then, use_step_matcher
 from pages.duckduckgo_page import DuckDuckGoPage
-from utils.wait_utility import WaitUtility
+from utils.wait_utility import WaitUtility  # Importamos WaitUtility desde la nueva ubicación
 
 # Ruta para el archivo JSON en la carpeta "data"
 file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'search_data.json')
@@ -12,12 +10,18 @@ file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data
 with open(file_path) as json_file:
     search_data = json.load(json_file)
 
+# ... (otros pasos)
+
+use_step_matcher("re")  # Usamos expresiones regulares para hacer coincidir los pasos
+
+
 @given('I am on the DuckDuckGo homepage')
 def step_impl(context):
     duckduckgo_page = context.page_manager.get_page(DuckDuckGoPage)
     duckduckgo_page.load(context.base_url)
 
-@when('I search for the term "{SearchTerm}"')
+
+@when('I search for the term "(?P<SearchTerm>.+)"')
 def step_impl(context, SearchTerm):
     for search in search_data['searches']:
         if search['term'] == SearchTerm:
@@ -31,7 +35,8 @@ def step_impl(context, SearchTerm):
             # wait_utility = WaitUtility(context.driver)
             # wait_utility.wait_for_element(By.XPATH, f"//h2[contains(text(), '{context.search_term}')]")
 
-@then('I see search results related to the term "{SearchTerm}"')
+
+@then('I see search results related to the term "(?P<SearchTerm>.+)"')
 def step_impl(context, SearchTerm):
     assert context.search_term in context.driver.title
     assert context.expected_result in context.driver.title
