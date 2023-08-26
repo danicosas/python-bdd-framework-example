@@ -1,7 +1,10 @@
 import json
 import os
 from behave import given, when, then
+from selenium.webdriver.common.by import By
+
 from pages.duckduckgo_page import DuckDuckGoPage
+from utils.wait_utility import WaitUtility
 
 # Ruta para el archivo JSON en la carpeta "data"
 file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'search_data.json')
@@ -24,6 +27,9 @@ def step_impl(context, SearchTerm):
 
             context.search_term = search['term']
             context.expected_result = search['expected_result']
+
+            # wait_utility = WaitUtility(context.driver)
+            # wait_utility.wait_for_element(By.XPATH, f"//h2[contains(text(), '{context.search_term}')]")
 
 @then('I see search results related to the term "{SearchTerm}"')
 def step_impl(context, SearchTerm):
